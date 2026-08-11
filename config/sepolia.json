@@ -1,0 +1,33 @@
+{
+  "ethereum": {
+    "chainId": 11155111,
+    "eid": 40161,
+    "sendUln": "0xcc1ae8cf5d3904cef3360a9532b477529b177cce",
+    "receiveUln": "0xdaf00f5ee2158dd58e0d3857851c432e34a3a851",
+    "endpoint": "0x6EDCE65403992e310A62460808c4b910D972f10f",
+    "oapp": "0x1B94c5fcDBa4d2a3E9e6cB3F3684CbB6b846CF52",
+    "oappDeploymentTransaction": "0x1ef4ee616bde3dd2b94816faaddb352f59e83bee636bd05bfcd3c5139693e8ed",
+    "expectedDeployer": "0x37B54930D500Db3c35De7B72C68A1e7afbc9A5ae"
+  },
+  "starknet": {
+    "chainId": "SN_SEPOLIA",
+    "eid": 40500,
+    "receiveUln": "0x0706572d6f7b938c813a20dc1b0328b83de939066e25bd0fbe14c270077f769d",
+    "sendUln": "0x0706572d6f7b938c813a20dc1b0328b83de939066e25bd0fbe14c270077f769d",
+    "endpoint": "0x0316d70a6e0445a58c486215fac8ead48d3db985acde27efca9130da4c675878",
+    "oapp": "0x3b6609179f6236ffb37e20658e8f69db9611d5c568d41fba8a156f7d18f371",
+    "expectedDeployer": "0x011dE9C756a84A99b5765183625cD7ad8EB6A0206cE2904Dbe478A1a1e5C0cb1",
+    "strkToken": "0x04718f5a0fc34cc1af16a1cdee98ffb20c31f5cd61d6ab07201858f4287c938d"
+  },
+  "ethereumConfirmations": 1,
+  "starknetConfirmations": 15,
+  "pollIntervalMs": 15000,
+  "fundingWarnings": {
+    "ethereumWei": "50000000000000000",
+    "starknetFri": "50000000000000000000"
+  },
+  "server": {
+    "host": "127.0.0.1",
+    "port": 4010
+  }
+}

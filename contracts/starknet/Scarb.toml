@@ -1,0 +1,13 @@
+[package]
+name = "mini_dvn"
+version = "0.1.0"
+edition = "2024_07"
+publish = false
+
+[dependencies]
+starknet = "2.14.0"
+
+[[target.starknet-contract]]
+sierra = true
+casm = true
+

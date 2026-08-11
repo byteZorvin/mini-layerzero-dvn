@@ -1,0 +1,15 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": null,
+  "bunVersion": "1.x",
+  "outputDirectory": "public",
+  "regions": ["bom1"],
+  "functions": {
+    "api/relay.ts": {
+      "maxDuration": 300,
+      "includeFiles": "node_modules/**/@noble/hashes/**"
+    },
+    "api/health.ts": { "maxDuration": 30 },
+    "api/jobs.ts": { "maxDuration": 30 }
+  }
+}
