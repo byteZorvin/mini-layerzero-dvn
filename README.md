@@ -6,6 +6,14 @@ The relay executes as bounded Vercel Hobby functions in Mumbai. A Cloudflare Wor
 
 This is not a production DVN. Its owner keys can approve arbitrary packets and also control other ArcX testnet contracts. Do not use this design or these keys on mainnet.
 
+Live testnet deployment:
+
+- Vercel: `https://mini-layerzero-dvn.vercel.app`
+- Public health: `https://mini-layerzero-dvn.vercel.app/api/health`
+- Cloudflare Worker: `mini-layerzero-dvn-scheduler`
+- Schedule: `* * * * *`, with relay calls at `+0s` and `+15s`
+- Durable state: Upstash Redis Free in Mumbai
+
 ## Architecture
 
 ```text
@@ -143,10 +151,11 @@ Do not configure Vercel Cron: Hobby does not provide minutely native scheduling.
 3. Stop the local worker and do not use the operator accounts elsewhere.
 4. Import both JSON state files and inspect protected `/api/jobs`.
 5. Run one authenticated hosted pass manually while still disabled to confirm the safe response.
-6. Set `MINI_DVN_ENABLED=true` in Vercel Production and redeploy.
-7. Run one authenticated pass and verify receipts/state before deploying the Cloudflare cron.
-8. Send one transfer in each direction. Confirm destination balance, LayerZero delivery/OFT events, and an `executed` or reconciled job.
-9. Observe health, cursor lag, Redis command count, errors, and balances for at least 60 minutes.
+6. Deploy the Cloudflare Worker and minutely cron while Vercel is still disabled.
+7. Set `MINI_DVN_ENABLED=true` in Vercel Production and redeploy.
+8. Run one authenticated pass and verify receipts/state, then confirm the scheduler refreshes health at both `+0s` and `+15s`.
+9. Send one transfer in each direction. Confirm destination balance, LayerZero delivery/OFT events, and an `executed` or reconciled job.
+10. Observe health, cursor lag, Redis command count, errors, and balances for at least 60 minutes.
 
 ## Recovery and rollback
 
