@@ -42,17 +42,17 @@ discovered → verify_submitted → verified → commit_submitted
 | Chain ID | `11155111` | `SN_SEPOLIA` |
 | LayerZero EID | `40161` | `40500` |
 | Confirmations | `1` | `15` |
-| OApp | `0x1B94c5fcDBa4d2a3E9e6cB3F3684CbB6b846CF52` | `0x03b6609179f6236ffb37e20658e8f69db9611d5c568d41fba8a156f7d18f371` |
-| Token | `0x0ae3f82B174d1837B30D530778c96a41C23FfCd5` | `0x09a571ec77a12f556448917b84b818f14355f41300ad8c7aa471f8743ede665` |
+| OApp | `0x9A4C4D10d548D44e12aA847636700F6f4bF16E12` | `0x07e9593b9a78dff63fe86a488710be4c683a1befcd24f697475e3e0ae86e75e5` |
+| Token | `0x0ae3f82B174d1837B30D530778c96a41C23FfCd5` | `0x05176ad5bd10d38ed31ed49b60280312546951017e99b78c102e6709073fc7f8` |
 | Endpoint | `0x6EDCE65403992e310A62460808c4b910D972f10f` | `0x0316d70a6e0445a58c486215fac8ead48d3db985acde27efca9130da4c675878` |
 | ReceiveUln | `0xdaf00f5ee2158dd58e0d3857851c432e34a3a851` | `0x0706572d6f7b938c813a20dc1b0328b83de939066e25bd0fbe14c270077f769d` |
 
 Mini-DVN contracts:
 
-- Ethereum source/job DVN: `0xe661e30cbdb3e2a6a2e27f95c9f5e3fdb132c1d1`
-- Ethereum destination verifier: `0x29540c0d87f206a7677521d7f578430541eacbac`
-- Starknet source/job DVN: `0x049a72020fb914e38e91c175e13becb79d0cd1512c12357942e4babe381ea40e`
-- Starknet destination verifier: `0x0636e2b57d4b95fb29b1a8d2385dd71499ac43e90b9bd791e7258c9d62d034ad`
+- Ethereum source/job DVN: `0xfb9c6e7e0fe9eb8020aed5dfd3d1da7a42605299`
+- Ethereum destination verifier: `0x28e505a838dfc64057e2ca1e64b1240b6930a7d8`
+- Starknet source/job DVN: `0x038ad88677d883b79ff0379a04805d4318fc3f38b7973ad3f1bb55c507d54801`
+- Starknet destination verifier: `0x050a2b57fa5b9de3b5d753b2f72d350aa89109e7c78c617a9183d07888eded66`
 
 Signing accounts:
 
@@ -80,6 +80,12 @@ bun test
 bun run scheduler:deploy -- --dry-run
 ```
 
+Local contract commands load operator RPCs and keys from the sibling
+`../arcxcore/scripts/.env.local` (falling back to `.env`). Set
+`ARCXCORE_ENV_FILE` to select another existing environment file. Explicit
+`MINI_DVN_*` variables always take precedence. No environment file is bundled
+into Vercel.
+
 Contract builds and tests are intentionally separate from the serverless build:
 
 ```bash
@@ -87,6 +93,18 @@ bun run build:ethereum
 bun run build:starknet
 bun run test:ethereum
 ```
+
+After the one-time configurable-worker deployment, update `config/sepolia.json`
+for a future OFT pair and run:
+
+```bash
+bun run configure
+bun run configure -- --execute
+```
+
+The command verifies all four worker owners, changes only mismatched route
+fields, and reads the configuration back. A contract redeployment is not
+required for a future single-route cutover.
 
 ## Vercel configuration
 

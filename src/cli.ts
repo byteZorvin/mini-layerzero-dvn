@@ -1,5 +1,5 @@
 import type { Hex } from "viem";
-import { deploy, deployReverse } from "./deploy";
+import { configure, deploy, deployReverse } from "./deploy";
 import { runRelayPass } from "./engine";
 import { migrateLegacyState } from "./migrate-state";
 import { backfillHistoricalPackets, deliverSourceTransaction } from "./relay";
@@ -15,6 +15,8 @@ if (command === "deploy") {
   await deploy(process.argv.includes("--execute"));
 } else if (command === "deploy-reverse") {
   await deployReverse(process.argv.includes("--execute"));
+} else if (command === "configure") {
+  await configure(process.argv.includes("--execute"));
 } else if (command === "relay") {
   console.log(JSON.stringify(await runRelayPass(), null, 2));
 } else if (command === "migrate-state") {
@@ -34,5 +36,5 @@ if (command === "deploy") {
 } else if (command === "status") {
   await status();
 } else {
-  throw new Error("Usage: cli.ts deploy [--execute] | deploy-reverse [--execute] | relay | migrate-state --forward PATH --reverse PATH | deliver --tx 0x... | backfill [--execute] | status");
+  throw new Error("Usage: cli.ts deploy [--execute] | deploy-reverse [--execute] | configure [--execute] | relay | migrate-state --forward PATH --reverse PATH | deliver --tx 0x... | backfill [--execute] | status");
 }

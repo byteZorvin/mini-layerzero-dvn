@@ -19,6 +19,19 @@ contract OtherCaller {
     function verify(MiniDVNReceive dvn, bytes calldata header) external {
         dvn.verifyPacket(header, bytes32(uint256(1)), 15);
     }
+
+
+    function configure(
+        MiniDVNReceive dvn,
+        address receiveUln,
+        uint32 sourceEid,
+        bytes32 sourceOapp,
+        uint32 destinationEid,
+        bytes32 destinationOapp,
+        uint64 confirmations
+    ) external {
+        dvn.setRoute(receiveUln, sourceEid, sourceOapp, destinationEid, destinationOapp, confirmations);
+    }
 }
 
 contract MiniDVNReceiveTest {
@@ -76,5 +89,30 @@ contract MiniDVNReceiveTest {
             abi.encodeCall(OtherCaller.verify, (dvn, header(SRC_EID, SRC_OAPP, DST_EID, DST_OAPP)))
         );
         require(!ok, "accepted wrong caller");
+    }
+
+
+    function testOwnerCanConfigureRoute() public {
+        bytes32 nextSourceOapp = bytes32(uint256(0x7777));
+        bytes32 nextDestinationOapp = bytes32(uint256(uint160(0x8888)));
+        dvn.setRoute(address(uln), SRC_EID + 1, nextSourceOapp, DST_EID + 1, nextDestinationOapp, 20);
+        bytes32 payloadHash = keccak256("next payload");
+        dvn.verifyPacket(
+            header(SRC_EID + 1, nextSourceOapp, DST_EID + 1, nextDestinationOapp),
+            payloadHash,
+            20
+        );
+        require(uln.payloadHash() == payloadHash, "updated route rejected");
+    }
+
+    function testNonOwnerCannotConfigureRoute() public {
+        OtherCaller caller = new OtherCaller();
+        (bool ok,) = address(caller).call(
+            abi.encodeCall(
+                OtherCaller.configure,
+                (dvn, address(uln), SRC_EID, SRC_OAPP, DST_EID, DST_OAPP, 15)
+            )
+        );
+        require(!ok, "accepted non-owner configuration");
     }
 }

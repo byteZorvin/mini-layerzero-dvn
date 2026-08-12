@@ -15,6 +15,7 @@
     "typecheck": "bun x tsc --noEmit",
     "deploy": "bun run src/cli.ts deploy",
     "deploy:reverse": "bun run src/cli.ts deploy-reverse",
+    "configure": "bun run src/cli.ts configure",
     "dev:vercel": "vercel dev",
     "deliver": "bun run src/cli.ts deliver",
     "backfill": "bun run src/cli.ts backfill",

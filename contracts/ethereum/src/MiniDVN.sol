@@ -26,16 +26,21 @@ interface ILayerZeroDVN {
 /// @dev This contract deliberately does not verify packets. It authenticates the canonical
 ///      SendUln/OApp route and emits the exact verification material for the manual relay.
 contract MiniDVN is ILayerZeroDVN {
+    error CallerNotOwner();
     error OnlySendUln(address caller);
     error InvalidDestination(uint32 actual);
     error InvalidSender(address actual);
     error UnexpectedFee(uint256 actual);
     error ZeroAddress();
 
-    address public immutable sendUln;
-    address public immutable oapp;
-    uint32 public immutable destinationEid;
+    address public owner;
+    address public sendUln;
+    address public oapp;
+    uint32 public destinationEid;
     uint64 public nextJobId;
+
+    event RouteConfigured(address indexed sendUln, address indexed oapp, uint32 destinationEid);
+    event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);
 
     event JobAssigned(
         uint64 indexed jobId,
@@ -46,11 +51,31 @@ contract MiniDVN is ILayerZeroDVN {
         uint64 confirmations
     );
 
-    constructor(address sendUln_, address oapp_, uint32 destinationEid_) {
+    constructor(address owner_, address sendUln_, address oapp_, uint32 destinationEid_) {
+        if (owner_ == address(0)) revert ZeroAddress();
+        owner = owner_;
+        _setRoute(sendUln_, oapp_, destinationEid_);
+    }
+
+    function setRoute(address sendUln_, address oapp_, uint32 destinationEid_) external {
+        if (msg.sender != owner) revert CallerNotOwner();
+        _setRoute(sendUln_, oapp_, destinationEid_);
+    }
+
+    function transferOwnership(address newOwner) external {
+        if (msg.sender != owner) revert CallerNotOwner();
+        if (newOwner == address(0)) revert ZeroAddress();
+        address previousOwner = owner;
+        owner = newOwner;
+        emit OwnershipTransferred(previousOwner, newOwner);
+    }
+
+    function _setRoute(address sendUln_, address oapp_, uint32 destinationEid_) private {
         if (sendUln_ == address(0) || oapp_ == address(0)) revert ZeroAddress();
         sendUln = sendUln_;
         oapp = oapp_;
         destinationEid = destinationEid_;
+        emit RouteConfigured(sendUln_, oapp_, destinationEid_);
     }
 
     function getFee(uint32 dstEid, uint64, address sender, bytes calldata)
@@ -88,4 +113,3 @@ contract MiniDVN is ILayerZeroDVN {
         if (sender != oapp) revert InvalidSender(sender);
     }
 }
-

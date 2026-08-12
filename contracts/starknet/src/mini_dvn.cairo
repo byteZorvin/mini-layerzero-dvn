@@ -24,6 +24,7 @@ pub trait IMiniDVN<TContractState> {
         payload_hash: Bytes32,
         confirmations: u64,
     );
+    fn set_receive_uln(ref self: TContractState, receive_uln: ContractAddress);
     fn transfer_ownership(ref self: TContractState, new_owner: ContractAddress);
     fn get_owner(self: @TContractState) -> ContractAddress;
     fn get_receive_uln(self: @TContractState) -> ContractAddress;
@@ -45,6 +46,7 @@ pub mod MiniDVN {
     #[derive(Drop, starknet::Event)]
     pub enum Event {
         PacketVerified: PacketVerified,
+        ReceiveUlnConfigured: ReceiveUlnConfigured,
         OwnershipTransferred: OwnershipTransferred,
     }
 
@@ -63,6 +65,12 @@ pub mod MiniDVN {
         pub previous_owner: ContractAddress,
         #[key]
         pub new_owner: ContractAddress,
+    }
+
+    #[derive(Drop, starknet::Event)]
+    pub struct ReceiveUlnConfigured {
+        #[key]
+        pub receive_uln: ContractAddress,
     }
 
     #[constructor]
@@ -94,6 +102,15 @@ pub mod MiniDVN {
                         confirmations,
                     },
                 );
+        }
+
+
+        fn set_receive_uln(ref self: ContractState, receive_uln: ContractAddress) {
+            assert(get_caller_address() == self.owner.read(), 'caller not owner');
+            let uln_felt: felt252 = receive_uln.into();
+            assert(uln_felt != 0, 'uln is zero');
+            self.receive_uln.write(receive_uln);
+            self.emit(ReceiveUlnConfigured { receive_uln });
         }
 
         fn transfer_ownership(ref self: ContractState, new_owner: ContractAddress) {

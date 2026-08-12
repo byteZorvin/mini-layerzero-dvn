@@ -1,27 +1,26 @@
 {
   "network": "sepolia",
-  "updatedAt": "2026-08-10T15:00:54.072Z",
+  "updatedAt": "2026-08-12T17:30:00.661Z",
   "ethereum": {
-    "address": "0xe661e30cbdb3e2a6a2e27f95c9f5e3fdb132c1d1",
-    "transactionHash": "0x7e3b3bce5ff76e14cc5fc7ca3e0d303859aa830e88a27f00fb2ccdea2322ba03",
-    "deploymentBlock": "11459663"
-  },
-  "starknet": {
-    "address": "0x636e2b57d4b95fb29b1a8d2385dd71499ac43e90b9bd791e7258c9d62d034ad",
-    "classHash": "0x6ea0c527407325a99726e61b11b8e30090bfa0093f993a363c10fb7a5334882",
-    "declareTransactionHash": "0xd31d2cd1e9a8e4413b289742377b38ea0e846aae68efbcb30d1ee4ec607357",
-    "deployTransactionHash": "0x7f4e3fa214bea4da7a35d49d110cf914669c37c1e18099b915d7d91d8c36d17"
+    "address": "0xfb9c6e7e0fe9eb8020aed5dfd3d1da7a42605299",
+    "transactionHash": "0x7c281a063b3c4a4b0c9f3cb6871b4fa9c2f9a35e12fe3ad40a2a860e7c7d2dfb",
+    "deploymentBlock": "11473950"
   },
   "ethereumReceive": {
-    "address": "0x29540c0d87f206a7677521d7f578430541eacbac",
-    "transactionHash": "0x98d1542010ff74977a2dc183a378950e4fcd60aad9356827b59e569511d2168b",
-    "deploymentBlock": "11459947"
+    "address": "0x28e505a838dfc64057e2ca1e64b1240b6930a7d8",
+    "transactionHash": "0xbbea04d87d97b2cdcd355daa6ca87ac5ffbca5a3d256c7ca2c49640c2891fe78",
+    "deploymentBlock": "11473956"
   },
   "starknetSend": {
-    "address": "0x49a72020fb914e38e91c175e13becb79d0cd1512c12357942e4babe381ea40e",
-    "classHash": "0x5399e65fd749a8b6ab333239c36519947c78ab57d4d7eecd282d972beaef5a9",
-    "declareTransactionHash": "0x703c0930d0f2ddecac9c145348b3c962920b918cd414ced83ee4ba755693a38",
-    "deployTransactionHash": "0x79251b017f8c13c0b8ffe2e4b6b313ab91cf41ade6e7ded1ac3b27ecb03eaed",
-    "deploymentBlock": "13251917"
+    "address": "0x38ad88677d883b79ff0379a04805d4318fc3f38b7973ad3f1bb55c507d54801",
+    "classHash": "0x3d942e14061d10a4bf1b0da389924deabab140e13105be69568360bd1749548",
+    "declareTransactionHash": "0x6b0ef150651bf0e32df4bdf404700a5134db10f478703bec2f1fbce839f66c8",
+    "deployTransactionHash": "0x657e62579a26d2a3d916be87252eb903d04a45cef9ec9fbe2362a2581002a7d",
+    "deploymentBlock": "13360219"
+  },
+  "starknet": {
+    "address": "0x50a2b57fa5b9de3b5d753b2f72d350aa89109e7c78c617a9183d07888eded66",
+    "classHash": "0x4fc6e75be7342e8e25cad89a56f92237b4004f33e5f69951e0633ae0c0a0e87",
+    "deployTransactionHash": "0x7792bc23a5372c92c12c533c6027a259fa7a44745ae089201a3a59aaf844340"
   }
 }
