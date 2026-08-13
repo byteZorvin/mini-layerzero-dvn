@@ -24,6 +24,15 @@ export const STARKNET_MINI_DVN_ABI = [
   },
   {
     type: "struct",
+    name: "core::byte_array::ByteArray",
+    members: [
+      { name: "data", type: "core::array::Array::<core::bytes_31::bytes31>" },
+      { name: "pending_word", type: "core::felt252" },
+      { name: "pending_word_len", type: "core::internal::bounded_int::BoundedInt::<0, 30>" },
+    ],
+  },
+  {
+    type: "struct",
     name: "mini_dvn::mini_dvn::Bytes32",
     members: [{ name: "value", type: "core::integer::u256" }],
   },
